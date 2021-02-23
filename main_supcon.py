@@ -14,7 +14,8 @@ from torchvision import transforms, datasets
 from util import TwoCropTransform, AverageMeter
 from util import adjust_learning_rate, warmup_learning_rate
 from util import set_optimizer, save_model
-from networks.resnet_big import SupConResNet
+# from networks.resnet_big import SupConResNet
+from networks.EN import SupConEN
 from losses import SupConLoss
 
 try:
@@ -51,7 +52,7 @@ def parse_option():
                         help='momentum')
 
     # model dataset
-    parser.add_argument('--model', type=str, default='resnet50')
+    parser.add_argument('--model', type=str, default='EN')
     parser.add_argument('--dataset', type=str, default='cifar10',
                         choices=['cifar10', 'cifar100', 'path'], help='dataset')
     parser.add_argument('--mean', type=str, help='mean of dataset in path in form of str tuple')
@@ -177,7 +178,7 @@ def set_loader(opt):
 
 
 def set_model(opt):
-    model = SupConResNet(name=opt.model)
+    model = SupConEN(name="EN")
     criterion = SupConLoss(temperature=opt.temp)
 
     # enable synchronized Batch Normalization
