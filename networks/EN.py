@@ -149,7 +149,7 @@ from efficientnet_pytorch import EfficientNet
 # }
 
 def EN():
-    encoder = EfficientNet.from_name('efficientnet-b1', include_top=False, num_classes=1)
+    encoder = EfficientNet.from_name('efficientnet-b1', include_top=False, num_classes=2)
     return encoder
 
 class LinearBatchNorm(nn.Module):
