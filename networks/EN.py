@@ -188,6 +188,7 @@ class SupConEN(nn.Module):
     def forward(self, x):
         feat = self.encoder(x)
         feat = F.normalize(self.head(feat), dim=1)
+        print(f"feat shape:{feat}")
         return feat
 
 
