@@ -14,7 +14,8 @@ from torchvision import transforms, datasets
 from util import AverageMeter
 from util import adjust_learning_rate, warmup_learning_rate, accuracy
 from util import set_optimizer, save_model
-from networks.resnet_big import SupCEResNet
+# from networks.resnet_big import SupCEResNet
+from networks.EN import SupCEEN
 
 try:
     import apex
@@ -168,7 +169,8 @@ def set_loader(opt):
 
 
 def set_model(opt):
-    model = SupCEResNet(name=opt.model, num_classes=opt.n_cls)
+#     model = SupCEResNet(name=opt.model, num_classes=opt.n_cls)
+    model = SupCEEN(name=opt.model, num_classes=opt.n_cls)
     criterion = torch.nn.CrossEntropyLoss()
 
     # enable synchronized Batch Normalization
