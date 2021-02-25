@@ -51,7 +51,7 @@ def parse_option():
     # model dataset
     parser.add_argument('--model', type=str, default='resnet50')
     parser.add_argument('--dataset', type=str, default='cifar10',
-                        choices=['cifar10', 'cifar100'], help='dataset')
+                        choices=['cifar10', 'cifar100', 'path'], help='dataset')
 
     # other setting
     parser.add_argument('--cosine', action='store_true',
@@ -63,7 +63,12 @@ def parse_option():
                         help='path to pre-trained model')
 
     opt = parser.parse_args()
-
+    # check if dataset is path that passed required arguments
+    if opt.dataset == 'path':
+        assert opt.data_folder is not None \
+            and opt.mean is not None \
+            and opt.std is not None
+        
     # set the path according to the environment
     opt.data_folder = './datasets/'
 

@@ -220,7 +220,7 @@ class LinearClassifier(nn.Module):
     def __init__(self, name='EN', num_classes=2):
         super(LinearClassifier, self).__init__()
 #         _, feat_dim = model_dict[name]
-        _, feat_dim = model_dict[name] = [EN, 1280]
+        _, feat_dim = [EN, 1280]
         self.fc = nn.Linear(feat_dim, num_classes)
 
     def forward(self, features):
