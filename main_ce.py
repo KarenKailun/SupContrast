@@ -172,7 +172,7 @@ def set_loader(opt):
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
                                             transform=train_transform)
         val_dataset = datasets.ImageFolder(root=opt.data_folder,
-                                           train=False,
+#                                            train=False,
                                            transform=val_transform)
     else:
         raise ValueError(opt.dataset)
