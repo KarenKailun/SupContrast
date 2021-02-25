@@ -187,8 +187,9 @@ class SupConEN(nn.Module):
 
     def forward(self, x):
         feat = self.encoder(x)
+        feat = torch.flatten(feat, 1)
         feat = F.normalize(self.head(feat), dim=1)
-        print(f"feat shape:{feat}")
+#         print(f"feat shape:{feat}")
         return feat
 
 
