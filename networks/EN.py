@@ -192,6 +192,16 @@ class SupConEN(nn.Module):
 #         print(f"feat shape:{feat}")
         return feat
 
+class SupCEEN(nn.Module):
+    """encoder + classifier"""
+    def __init__(self, name='EN', num_classes=2):
+        super(SupCEEN, self).__init__()
+        model_fun, dim_in = [EN, 1280]
+        self.encoder = model_fun()
+        self.fc = nn.Linear(dim_in, num_classes)
+
+    def forward(self, x):
+        return self.fc(self.encoder(x))
 
 # class SupCEResNet(nn.Module):
 #     """encoder + classifier"""
