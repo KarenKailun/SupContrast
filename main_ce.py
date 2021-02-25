@@ -54,7 +54,10 @@ def parse_option():
     parser.add_argument('--model', type=str, default='resnet50')
     parser.add_argument('--dataset', type=str, default='cifar10',
                         choices=['cifar10', 'cifar100', 'path'], help='dataset')
-
+    parser.add_argument('--mean', type=str, help='mean of dataset in path in form of str tuple')
+    parser.add_argument('--std', type=str, help='std of dataset in path in form of str tuple')
+    parser.add_argument('--data_folder', type=str, default=None, help='path to custom dataset')
+    
     # other setting
     parser.add_argument('--cosine', action='store_true',
                         help='using cosine annealing')
