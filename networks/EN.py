@@ -168,11 +168,10 @@ class LinearBatchNorm(nn.Module):
 
 class SupConEN(nn.Module):
     """backbone + projection head"""
-    def __init__(self, name='EN', head='mlp', feat_dim=128):
+    def __init__(self, name='EN', head='mlp', feat_dim=1280):
         super(SupConEN, self).__init__()
-#         model_fun, dim_in = model_dict[name]
         model_fun, dim_in = [EN, 1280]
-        self.encoder = model_fun()
+        self.encoder = EN()
 #         if head == 'linear':
 #             self.head = nn.Linear(dim_in, feat_dim)
 #         elif head == 'mlp':

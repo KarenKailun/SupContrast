@@ -55,8 +55,8 @@ def parse_option():
     parser.add_argument('--mean', type=str, help='mean of dataset in path in form of str tuple')
     parser.add_argument('--std', type=str, help='std of dataset in path in form of str tuple')
     parser.add_argument('--data_folder', type=str, default=None, help='path to custom dataset')
+    parser.add_argument('--n_cls', type=int, default=2)
 
-    
     # other setting
     parser.add_argument('--cosine', action='store_true',
                         help='using cosine annealing')
@@ -104,7 +104,7 @@ def parse_option():
         opt.n_cls = 10
     elif opt.dataset == 'cifar100':
         opt.n_cls = 100
-    elif opt.dataset == 'path':
+        elif opt.dataset == 'path':
         opt.n_cls = 2
     else:
         raise ValueError('dataset not supported: {}'.format(opt.dataset))
