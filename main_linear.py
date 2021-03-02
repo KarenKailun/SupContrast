@@ -115,7 +115,8 @@ def parse_option():
 def set_model(opt):
 #     model = SupConResNet(name=opt.model)
     model = SupConEN(name=opt.model)
-    criterion = torch.nn.CrossEntropyLoss()
+#     criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.BCELoss()
 
     classifier = LinearClassifier(name=opt.model, num_classes=opt.n_cls)
 
@@ -165,12 +166,22 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
         # compute loss
         with torch.no_grad():
             features = model.encoder(images)
+        features = torch.flatten(features, 0) #
         output = classifier(features.detach())
-        loss = criterion(output, labels)
+        
+        #ADDED
+        m = torch.nn.Sigmoid()
+        out_trans = m(output.data)
+        labels = labels.type(torch.FloatTensor)
+        out_grad = out_trans.clone().detach().requires_grad_(True)
+        
+#         loss = criterion(output, labels)
+        loss = criterion(out_grad, labels)
 
         # update metric
         losses.update(loss.item(), bsz)
-        acc1, acc5 = accuracy(output, labels, topk=(1, 5))
+#         acc1, acc5 = accuracy(output, labels, topk=(1, 5)) # CHANGE FOR BATCH SIZE
+        acc1, acc5 = accuracy(output, labels, topk=(1, 1))
         top1.update(acc1[0], bsz)
 
         # SGD
@@ -213,12 +224,25 @@ def validate(val_loader, model, classifier, criterion, opt):
             bsz = labels.shape[0]
 
             # forward
-            output = classifier(model.encoder(images))
-            loss = criterion(output, labels)
+            ## added
+            features = model.encoder(images)
+            features = torch.flatten(features, 0)
+            
+#             output = classifier(model.encoder(images))
+            output = classifier(features.detach())
+    
+            #added        
+            m = torch.nn.Sigmoid()
+            out_trans = m(output.data)
+            labels = labels.type(torch.FloatTensor)
+            out_grad = out_trans.clone().detach().requires_grad_(True)
+    
+            loss = criterion(out_grad, labels)
 
             # update metric
             losses.update(loss.item(), bsz)
-            acc1, acc5 = accuracy(output, labels, topk=(1, 5))
+#             acc1, acc5 = accuracy(output, labels, topk=(1, 5))
+            acc1, acc5 = accuracy(output, labels, topk=(1, 1))
             top1.update(acc1[0], bsz)
 
             # measure elapsed time

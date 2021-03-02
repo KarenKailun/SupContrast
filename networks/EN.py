@@ -149,7 +149,7 @@ from efficientnet_pytorch import EfficientNet
 # }
 
 def EN():
-    encoder = EfficientNet.from_name('efficientnet-b1', include_top=False, num_classes=2)
+    encoder = EfficientNet.from_name('efficientnet-b1', include_top=False, num_classes=1)
     return encoder
 
 class LinearBatchNorm(nn.Module):
@@ -193,7 +193,7 @@ class SupConEN(nn.Module):
 
 class SupCEEN(nn.Module):
     """encoder + classifier"""
-    def __init__(self, name='EN', num_classes=2):
+    def __init__(self, name='EN', num_classes=1):
         super(SupCEEN, self).__init__()
         model_fun, dim_in = [EN, 1280]
         self.encoder = model_fun()
@@ -216,7 +216,7 @@ class SupCEEN(nn.Module):
 
 class LinearClassifier(nn.Module):
     """Linear classifier"""
-    def __init__(self, name='EN', num_classes=2):
+    def __init__(self, name='EN', num_classes=1):
         super(LinearClassifier, self).__init__()
 #         _, feat_dim = model_dict[name]
         _, feat_dim = [EN, 1280]

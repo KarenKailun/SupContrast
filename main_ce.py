@@ -143,7 +143,8 @@ def set_loader(opt):
     normalize = transforms.Normalize(mean=mean, std=std)
 
     train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(size=32, scale=(0.2, 1.)),
+#         transforms.RandomResizedCrop(size=32, scale=(0.2, 1.)),
+        transforms.Resize([240,240]), #ENb1 input size
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         normalize,
