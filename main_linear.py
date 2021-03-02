@@ -154,6 +154,7 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
 
     end = time.time()
     for idx, (images, labels) in enumerate(train_loader):
+        print(images.shape)
         data_time.update(time.time() - end)
 
         images = images.cuda(non_blocking=True)
@@ -166,8 +167,11 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
         # compute loss
         with torch.no_grad():
             features = model.encoder(images)
+            print(f"post-encoder: {features.shape}")
         features = torch.flatten(features, 0) #
+        print(f"flattened: {features.shape}")
         output = classifier(features.detach())
+        print(labels, output.data)
         
         #ADDED
         m = torch.nn.Sigmoid()
