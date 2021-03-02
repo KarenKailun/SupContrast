@@ -171,7 +171,8 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
         features = torch.flatten(features, 0) #
         print(f"flattened: {features.shape}")
         output = classifier(features.detach())
-        print(labels, output.data)
+        print(f"output shape: {output.shape}")
+        print(f"labels: {labels}, output: {output.data}")
         
         #ADDED
         m = torch.nn.Sigmoid()
